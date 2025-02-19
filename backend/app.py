@@ -6,6 +6,7 @@ from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
+
 import os
 import logging
 
@@ -55,62 +56,70 @@ def home():
     return "Welcome to the College Service Ticketing System!"
 
 # User Signup with Unique Email & Username Check
+
 @app.route('/signup', methods=['POST'])
 def signup():
     data = request.json
-    username = data.get('username')
-    email = data.get('email')
-    password = data.get('password')
+    username = data['username']
+    email = data['email']
+    password = data['password']
 
-    existing_user = User.query.filter((User.email == email) | (User.username == username)).first()
+    # Check if email already exists
+    existing_user = User.query.filter_by(email=email).first()
     if existing_user:
-        return jsonify({'success': False, 'message': 'Email or Username already taken'}), 400
+        return jsonify({"success": False, "message": "Email already in use."})
 
+    # ✅ Hash the password before storing it
     hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+
+    # Save new user
     new_user = User(username=username, email=email, password=hashed_password)
     db.session.add(new_user)
     db.session.commit()
 
-    return jsonify({'success': True, 'message': 'User registered successfully'})
+    return jsonify({"success": True, "message": "Signup successful!"})
+
+
 
 
 # User Login with Correct Password Check
+import traceback  # Add this at the top of your file
 @app.route('/login', methods=['POST'])
 def login():
-    try:
-        data = request.get_json()
-        user = User.query.filter_by(email=data['email']).first()
+    data = request.json
+    email = data['email']
+    password = data['password']
 
-        if user and bcrypt.check_password_hash(user.password, data['password']):
-            access_token = create_access_token(identity=user.id)
-            return jsonify({
-                'message': 'Login successful',
-                'access_token': access_token,
-                'redirect_url': '/dashboard'  # Send dashboard URL
-            }), 200
-        else:
-            return jsonify({'message': 'Invalid email or password'}), 401
+    user = User.query.filter_by(email=email).first()
 
-    except Exception as e:
-        return jsonify({'message': 'Internal Server Error'}), 500
-
+    if user and check_password_hash(user.password, password):
+        access_token = create_access_token(identity=user.id)  # Generate JWT Token
+        return jsonify({"success": True, "message": "Login successful!", "token": access_token})
+    else:
+        return jsonify({"success": False, "message": "Invalid email or password."})
 
 
 # Create Service Request
 @app.route('/service-request', methods=['POST'])
 @jwt_required()
 def create_service_request():
-    data = request.get_json()
-    user_id = get_jwt_identity()
+    try:
+        data = request.get_json()
+        user_id = get_jwt_identity()
+        app.logger.debug(f"Request received: {data}, User: {user_id}")
 
-    if not data or 'category' not in data or 'description' not in data:
-        return jsonify({'message': 'Missing required fields'}), 400
+        if not data or 'category' not in data or 'description' not in data:
+            return jsonify({'message': 'Missing required fields'}), 400
 
-    new_request = ServiceRequest(user_id=user_id, category=data['category'], description=data['description'])
-    db.session.add(new_request)
-    db.session.commit()
+        new_request = ServiceRequest(user_id=user_id, category=data['category'], description=data['description'])
+        db.session.add(new_request)
+        db.session.commit()
 
-    return jsonify({'message': 'Service request created successfully'}), 201
+        return jsonify({'message': 'Service request created successfully'}), 201
+    except Exception as e:
+        app.logger.error(f"Error: {str(e)}")
+        return jsonify({'message': 'Internal Server Error'}), 500
+
 
 # View User's Service Requests
 @app.route('/service-requests', methods=['GET'])

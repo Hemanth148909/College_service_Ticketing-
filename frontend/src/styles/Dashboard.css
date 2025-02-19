@@ -1,0 +1,138 @@
+/* Dashboard Container */
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+    background: #f4f4f4;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 250px;
+    background: #2c2c2c;
+    color: white;
+    height: 100vh;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    padding: 20px;
+  }
+  
+  .sidebar.closed {
+    width: 80px;
+  }
+  
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .profile-icon {
+    color: white;
+    margin-right: 10px;
+  }
+  
+  .menu-btn {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  /* Sidebar Menu */
+  .menu-items {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+  }
+  
+  .menu-items li {
+    padding: 15px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .menu-items li:hover {
+    background: #444;
+  }
+  
+  /* Logout Button */
+  .logout-btn {
+    position: absolute;
+    bottom: 20px;
+    width: 80%;
+    background: #ff4d4d;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+  }
+  
+  .logout-btn:hover {
+    background: #ff1a1a;
+  }
+  
+  /* Main Content */
+  .main-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Notification */
+  .notification-container {
+    position: relative;
+  }
+  
+  .bell-icon {
+    font-size: 24px;
+    cursor: pointer;
+  }
+  
+  .notif-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: red;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    text-align: center;
+    font-size: 12px;
+  }
+  
+  .notifications-dropdown {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    width: 250px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .notification {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .notification:last-child {
+    border-bottom: none;
+  }
+  
+  .notification:hover {
+    background: #f0f0f0;
+  }
+  

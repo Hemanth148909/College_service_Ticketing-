@@ -13,17 +13,15 @@ function Signup() {
     try {
       const response = await axios.post('http://127.0.0.1:5000/signup', { username, email, password });
 
-      console.log("Signup Response:", response.data); // Debugging
-
       if (response.data.success) {
-        alert("Signup successful! Please login.");
+        alert("Signup successful! 🎉 Redirecting to login...");
         navigate('/login');
       } else {
-        alert(response.data.message || "Signup failed. Please try again.");
+        alert(response.data.message || "Signup failed. Try again!");
       }
     } catch (error) {
       console.error("Signup error:", error);
-      alert("An error occurred during signup. Please try again.");
+      alert("An error occurred. Please try again.");
     }
   };
 
