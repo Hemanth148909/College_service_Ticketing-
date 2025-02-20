@@ -1,0 +1,67 @@
+.raise-request-container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .raise-request-container h2 {
+    text-align: center;
+    color: #333;
+  }
+  
+  .request-form .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .request-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .request-form input,
+  .request-form select,
+  .request-form textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .request-form textarea {
+    height: 80px;
+    resize: none;
+  }
+  
+  .image-preview {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 5px;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .submit-btn:hover {
+    background-color: #218838;
+  }
+  
+  .status-message {
+    text-align: center;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
